@@ -7,7 +7,7 @@ import Table from 'react-bootstrap/Table';
 import { FaUsers } from 'react-icons/fa';
 import Placeholder from 'react-bootstrap/Placeholder';
 
-const UsersPage = (props) => {
+const UsersPage = () => {
     const { currentUser } = useContext(AuthContext);
     const [users, setUsers] = useState([]);
     

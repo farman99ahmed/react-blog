@@ -26,6 +26,29 @@ const CreateNewArticle = async (title, content, token) => {
     }
 }
 
+const UpdateArticle = async (_id, title, body, token) => {
+    try {
+        const config = {
+            method: 'put',
+            url: `${backendURL}/updatearticle`,
+            headers: JWTHeader(token),
+            data: {
+                _id,
+                title,
+                body
+            }
+        }
+        const response = await axios(config);
+        return ({
+            message: response.data.message,
+        });
+    } catch (error) {
+        return ({
+            error: error.response.data.error
+        })
+    }
+}
+
 const GetAllArticles = async (token, isMyArticle = false) => {
     try {
         const config = {
@@ -64,5 +87,5 @@ const DeleteArticle = async (token, _id) => {
 }
 
 export {
-    CreateNewArticle, GetAllArticles, DeleteArticle
+    CreateNewArticle, UpdateArticle, GetAllArticles, DeleteArticle
 }

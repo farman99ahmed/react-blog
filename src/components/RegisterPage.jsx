@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import { Register } from '../services/Auth';
 import { MdCheckCircle } from 'react-icons/md';
 
-const RegisterPage = (props) => {
+const RegisterPage = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [mobile, setMobile] = useState('')

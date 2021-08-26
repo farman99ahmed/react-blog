@@ -14,7 +14,7 @@ import { FaDatabase, FaUndoAlt, FaUnlockAlt, FaRegImage } from 'react-icons/fa';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { MdCheckCircle } from 'react-icons/md';
 
-const MyAccount = (props) => {
+const MyAccount = () => {
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -55,22 +55,29 @@ const MyAccount = (props) => {
     const handleProfilePictureUpdate = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const response = await UpdateProfilePicture(currentUser.token, image);
-        if ("error" in response) {
-            setError(response.error);
-            setLoading(false);
+        console.log(image);
+        if (image.size > 500000) {
+            setError('Maximum allowed size is 500 KB')
+        } else if (!(['image/jpeg', 'image/png', 'image/jpg'].includes(image.type))) {
+            setError('Only JPG/JPEG/PNG images are allowed.')
         } else {
-            setSuccess(response.success)
-            setCurrentUser({
-                id: currentUser.id,
-                name: currentUser.name,
-                email: currentUser.email,
-                mobile: currentUser.mobile,
-                picture: response.picture,
-                token: currentUser.token
-            });
-            setLoading(false);
-            clearScreen();
+            const response = await UpdateProfilePicture(currentUser.token, image);
+            if ("error" in response) {
+                setError(response.error);
+                setLoading(false);
+            } else {
+                setSuccess(response.success)
+                setCurrentUser({
+                    id: currentUser.id,
+                    name: currentUser.name,
+                    email: currentUser.email,
+                    mobile: currentUser.mobile,
+                    picture: response.picture,
+                    token: currentUser.token
+                });
+                setLoading(false);
+                clearScreen();
+            }
         }
     }
     return (

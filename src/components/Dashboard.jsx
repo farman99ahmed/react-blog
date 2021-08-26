@@ -9,7 +9,7 @@ import { MdEmail } from 'react-icons/md';
 import image from '../assets/image.png';
 
 
-const Blogs = (props) => {
+const Blogs = () => {
     const { currentUser } = useContext(AuthContext);
 
     return (

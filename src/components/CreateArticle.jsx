@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
-import { CreateNewArticle } from '../services/Article';
+import { useLocation } from 'react-router-dom';
+import { CreateNewArticle, UpdateArticle } from '../services/Article';
 import AuthContext from '../context/AuthContext';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,14 +12,26 @@ import { BiCommentDetail } from 'react-icons/bi';
 import { FaDatabase, FaUndoAlt } from 'react-icons/fa';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { MdCheckCircle } from 'react-icons/md';
+import { useEffect } from 'react';
 
-const CreateArticle = (props) => {
+
+const CreateArticle = () => {
+    const location = useLocation();
+    const [id, setId] = useState(null)
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [loading, setLoading] = useState('')
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
     const { currentUser } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (location.state !== undefined) {
+            setId(location.state.id);
+            setTitle(location.state.title);
+            setContent(location.state.content);
+        }
+    }, [location.state])
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -27,12 +40,12 @@ const CreateArticle = (props) => {
             setError('All fields are required.');
             setLoading(false);
         } else {
-            const response = await CreateNewArticle(title, content, currentUser.token);
+            const response = !id ? await CreateNewArticle(title, content, currentUser.token) : await UpdateArticle(id, title, content, currentUser.token);
             if ("error" in response) {
                 setError(response.error);
                 setLoading(false);
             } else {
-                setSuccess(`New Article created with ID: ${response.id}`)
+                !id ? setSuccess(`New Article created with ID: ${response.id}`) : setSuccess(response.message);
                 setLoading(false);
                 setTitle('');
                 setContent('');
@@ -49,7 +62,7 @@ const CreateArticle = (props) => {
                         <MdCheckCircle /> <strong>{success} </strong></Alert> }
                 </Row>
                 <h1 className="display-5 fw-bold p-2">
-                    <BiCommentDetail /> Create an article..</h1>
+                    <BiCommentDetail /> {id ? "Update" : "Create"} an article..</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <FloatingLabel label="Article Author" className="text-dark">

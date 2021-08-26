@@ -11,7 +11,7 @@ import { ImHome } from 'react-icons/im';
 import { FaComment, FaUsers, FaRegNewspaper, FaUserAlt } from 'react-icons/fa';
 
 
-const NavigationBar = (props) => {
+const NavigationBar = () => {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const handleSignOut = async (e) => {
