@@ -1,5 +1,8 @@
 import axios from "axios";
 import { AuthHeader, JWTHeader } from "../config/Headers";
+import FirebaseInstance from '../config/FirebaseConfig';
+import "firebase/storage";
+import { v4 as uuidv4 } from 'uuid';
 
 const backendURL = process.env.REACT_APP_BACKEND_URL;
 
@@ -51,6 +54,7 @@ const Login = async (email, password) => {
             name: response.data.fullname,
             email: response.data.email,
             mobile: response.data.mobile,
+            picture: response.data.profile_picture,
             token: token
         });
     } catch (error) {
@@ -60,13 +64,53 @@ const Login = async (email, password) => {
     }
 }
 
-const Logout = async () => {
+const ChangePassword = async (token, old_password, new_password) => {
     try {
-        localStorage.clear();
-        return true
+        const config = {
+            method: 'put',
+            url: `${backendURL}/changepassword`,
+            headers: JWTHeader(token),
+            data: {
+                old_password,
+                new_password
+            }
+        }
+        const response = await axios(config);
+        return ({
+            success: response.data.message
+        });
     } catch (error) {
-        return false
+        return ({
+            error: error.response.data.error
+        });
     }
 }
 
-export { Login, Register, Logout }
+const UpdateProfilePicture = async (token, image) => {
+    try {
+        const uploadTask = await FirebaseInstance().storage().ref('mern').child('profile/' + uuidv4()).put(image);
+        const downloadURL = await uploadTask.ref.getDownloadURL();
+        const config = {
+            method: 'put',
+            url: `${backendURL}/updateprofilepictureurl`,
+            headers: JWTHeader(token),
+            data: {
+                profile_picture: downloadURL
+            }
+        }
+        const response = await axios(config);
+        return ({
+            success: response.data.message,
+            picture: downloadURL
+        });
+
+    } catch (error) {
+        return ({
+            error: error.message
+        })
+    }
+
+}
+
+
+export { Login, Register, ChangePassword, UpdateProfilePicture }

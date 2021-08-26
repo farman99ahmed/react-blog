@@ -8,7 +8,7 @@ import { SiReact } from 'react-icons/si';
 import { GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 import { ImHome } from 'react-icons/im';
-import { FaComment, FaUsers, FaRegNewspaper } from 'react-icons/fa';
+import { FaComment, FaUsers, FaRegNewspaper, FaUserAlt } from 'react-icons/fa';
 
 
 const NavigationBar = (props) => {
@@ -23,7 +23,7 @@ const NavigationBar = (props) => {
     <Navbar bg="dark" variant="dark">
       <Container>
         <Navbar.Brand>
-          <SiReact /> MERN Auth Demo</Navbar.Brand>
+          <SiReact /> MERN Blogger</Navbar.Brand>
         <Nav className="me-auto">
         </Nav>
         {currentUser.id && 
@@ -50,6 +50,12 @@ const NavigationBar = (props) => {
                   <Link to="/createarticle">
                   <Button variant="outline-warning">
                     <FaComment /> Create Article</Button>
+                  </Link>
+                </Nav>                
+                <Nav className="p-2">
+                  <Link to="/account">
+                  <Button variant="outline-warning">
+                    <FaUserAlt /> My Account</Button>
                   </Link>
                 </Nav>
                 <Nav className="p-2">

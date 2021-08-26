@@ -5,13 +5,6 @@ const AuthHeader = () => {
     })
 }
 
-const ImageHeader = (token) => {
-    return ({
-        'mimeType': '',
-        'x-access-token': token
-    })
-}
-
 const JWTHeader = (token) => {
     return ({
         'Content-Type': 'application/json',
@@ -22,6 +15,5 @@ const JWTHeader = (token) => {
 
 export {
     AuthHeader,
-    ImageHeader,
     JWTHeader
 }

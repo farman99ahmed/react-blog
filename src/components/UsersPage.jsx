@@ -9,7 +9,7 @@ import { FaUsers } from 'react-icons/fa';
 const UsersPage = (props) => {
     const { currentUser } = useContext(AuthContext);
     const [users, setUsers] = useState(null);
-
+    
     useEffect(() => {
         async function fetchUsers() {
             let response = await AllUsers(currentUser.token);

@@ -38,6 +38,7 @@ const LoginPage = () => {
                         name: response.name,
                         email: response.email,
                         mobile: response.mobile,
+                        picture: response.picture,
                         token: response.token
                     });
                     setLoading(false);

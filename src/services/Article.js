@@ -52,7 +52,7 @@ const DeleteArticle = async (token, _id) => {
                 _id
             }
         }
-        const response = await axios(config);
+        await axios(config);
         return ({
             message: "User deleted successfully"
         });
