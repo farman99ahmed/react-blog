@@ -8,7 +8,7 @@
 https://react-blog-farman.herokuapp.com/login
 ```
 
-### This server for this application is deployed at:
+### The server for this application is deployed at:
 
 ```bash
 https://damp-everglades-21700.herokuapp.com/
