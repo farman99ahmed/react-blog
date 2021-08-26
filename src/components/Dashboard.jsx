@@ -11,7 +11,6 @@ import image from '../assets/image.png';
 
 const Blogs = (props) => {
     const { currentUser } = useContext(AuthContext);
-    console.log(currentUser.picture);
 
     return (
         <Container className="bg-dark rounded-3 text-white">

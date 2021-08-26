@@ -41,6 +41,11 @@ const RegisterPage = (props) => {
                 setLoading(false);
             } else {
                 setSuccess('User created successfully');
+                setName('');
+                setEmail('');
+                setMobile('');
+                setPassword('');
+                setConfirmPassword('');
                 setLoading(false);
         }
     }

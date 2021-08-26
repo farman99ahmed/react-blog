@@ -13,6 +13,7 @@ const ArticlesPage = (props) => {
     const { currentUser } = useContext(AuthContext);
     const [articles, setArticles]= useState(null);
     const [loading, setLoading] = useState(false);
+    const [flag, setFlag] = useState(false);
 
     const getAllArticles = async (e, value) => {
         e.preventDefault();
@@ -37,6 +38,7 @@ const ArticlesPage = (props) => {
             setLoading(false);
         } else {
             setLoading(false);
+            getAllArticles(e, flag);
         }
     }
 
@@ -48,14 +50,14 @@ const ArticlesPage = (props) => {
                     <FaRegNewspaper /> Articles..</h1>
                 <Row>
                     <Col md={6}>
-                    <Button variant="outline-warning" className="w-100 my-5 p-1" size="lg" onClick={getAllArticles}
-                        disabled={loading}>
+                    <Button variant="outline-warning" className="w-100 my-5 p-1" size="lg" onClick={(e)=>
+                         {getAllArticles(e, false); setFlag(false); } } disabled={loading}>
                         <FaComments /> {loading ? "Loading" : "Show all articles"}
                     </Button>
                     </Col>
                     <Col md={6}>
                     <Button variant="outline-warning" className="w-100 my-5 p-1" size="lg" onClick={(e)=>
-                        getAllArticles(e, true)} disabled={loading}>
+                         {getAllArticles(e, true); setFlag(true); } } disabled={loading}>
                         <FaComment /> {loading ? "Loading" : "Show my articles"}
                     </Button>
                     </Col>
